@@ -1,4 +1,10 @@
-from django.urls import path
+from rest_framework_nested import routers
+
 from . import views
 
-urlpatterns = []
+router = routers.DefaultRouter()
+
+router.register('categories', views.CategoryViewSet, basename='category')
+router.register('articles', views.ArticleViewSet, basename='articles')
+
+urlpatterns = router.urls

@@ -48,12 +48,9 @@ class GalleryArticle(models.Model):
 
 
 class Comments(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='')
-    content = models.TextField(verbose_name='')
-    create_datetime = models.DateTimeField(auto_now_add=True, verbose_name='')
-    update_datetime = models.DateTimeField(auto_now=True, verbose_name='')
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name='Статья')
+    author = models.CharField(max_length=255, verbose_name='Имя автора')
+    content = models.TextField(verbose_name='Комментарий')
+    create_datetime = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время создание статьи')
+    update_datetime = models.DateTimeField(auto_now=True, verbose_name='Дата и время изменения статьи')
 
-
-class FavoriteArticle(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)

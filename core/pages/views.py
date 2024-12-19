@@ -1,10 +1,8 @@
-from rest_framework import status
-from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter, OrderingFilter
 
-from .models import Category, Article
-from .serializers import CategorySerializer, ArticleSerializer
+from .models import Category, Article, Comments
+from .serializers import CategorySerializer, ArticleSerializer, CommentSerializers
 from .pagination_settings import ClassicPagination, MiniPagination
 
 
@@ -30,3 +28,13 @@ class ArticleViewSet(ModelViewSet):
 
     def get_serializer_context(self):
         return {'request': self.request}
+
+
+class CommentViewSet(ModelViewSet):
+    serializer_class = CommentSerializers
+
+    def get_queryset(self):
+        return Comments.objects.filter(article_id=self.kwargs['articles_pk'])
+
+    def get_serializer_context(self):
+        return {'article_id': self.kwargs['articles_pk']}
